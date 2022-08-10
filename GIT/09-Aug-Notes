@@ -1,0 +1,40 @@
+********************************
+
+Execute command
+
+$ sudo su -
+
+
+Install our first tool : git
+
+$ yum install git 
+
+Scenario 1: Create a Working directory 
+
+$ mkdir myproject
+
+$ cd myproject
+
+and create 2 files in it
+
+touch index1.html
+
+touch index2.html
+
+
+Create a local repository
+
+
+$ git init
+
+It will initialize the repository
+
+how will you know locla repo is created
+
+.git folder will get created
+
+How do you see the .git folder
+
+$ ls -al
+
+$ git status
