@@ -1,0 +1,232 @@
+Day 2: Agenda:
+*************
+
+git config command
+
+Add modified files to git repo
+
+Delete a file and revert the changes
+
+.gitignore
+
+Branching and Merging
+
+
+
+********************
+
+Scenario 1: Take an exisitng file which is in local repo- already tracked by git
+
+Make some changes into it
+
+vim index1.html
+
+File will open in editor
+
+press i
+
+enter any text
+
+press ESC key
+
+then enter key  
+:wq!
+
+press enter key
+
+file will be saved
+
+
+Check git status
+
+git status
+
+Add the changes to the stagging area
+
+git add .
+
+Commit the changes to the LR
+
+git commit -m "modifications"
+
+Method2:
+*********
+Take an exisitng file which is in local repo
+
+
+Make some changes into it
+
+vim index1.html
+
+File will open in editor
+
+press i
+
+enter any text
+
+press ESC key
+
+then enter key  
+:wq!
+
+press enter
+
+file will be saved
+
+Check git status
+
+$ git status
+
+status of the file will be modified
+
+Directly add and commit the changes to LR
+
+git commit -a -m "modiofcations"
+
+-a : add all the chnages
+
+The above command is applicable only when status of file is modified
+
+Sceanrio 2:
+***************
+
+git diff command
+
+Shows what chnages in the file were version controlled previously and new chnages that you have made and are not VC
+
+and are not in LR
+
+$ git diff filename
+
+Scenario 3:
+**********************
+
+How to your commit hisotry
+
+How to know what all commits you have made
+
+$ git log
+
+$ git log --oneline
+
+
+Scenario 4:
+******************
+
+Set up git configurations for AuthorName(user.name) and email id
+
+configuration are nothing but 
+
+variable & its value
+
+user.name	sonal0409
+
+user.email	mittal.sonal04@gmail.com
+
+Configurations in git are of 3 types
+
+local --> global --> system
+
+
+ git config --global user.name edureka
+ git config --global user.email admin@gmail.com
+
+See the configurations in the file
+  $ cat ~/.gitconfig
+
+Remove the configuration
+
+ git config --global --unset user.name
+
+
+List all the configurations:
+
+ git config --list
+
+
+git config --local user.name edureka
+
+$ cat .git/config
+
+git config --system user.name edureka
+
+$ cat ~/etc/gitconfig
+
+************************************
+Scenario 6:
+**************
+
+
+Select one fo the file form LR
+
+index1.html
+
+Using Git delete a file form LR and WD
+
+$ git rm filename
+
+As we have done some chnages on the LR, so we have to commit it
+
+$ git commit -m "deleted a file"
+
+
+Assignment:
+
+Delete a file form LR and not form WD
+
+
+$ git rm --cached <filename>
+
+
+$ git commit -m "deleted"
+
+
+
+*******************
+
+git show command:
+
+
+git show <commitid>
+
+This commad will show what chnages were commited
+
+*******************
+
+Revert command in git
+
+$ git revert a304c64
+
+
+what ever chnage you did in that commit it will be taken back to its previous state
+
+Fir eg: we deleetd a files as part of the commit
+
+if we revert the commit, the file will be back to LR and WD
+
+
+Also , because some chnage has happened on LR
+
+git will open a file editor, asking you for a message as to why do you want to revert
+
+save the file and auto commit id will be generted
+
+****************************
+
+Scenario 7:
+*******************
+
+Lets us say we have file like
+
+  file1.xml file.doc file1.txt
+
+these files are not to be version controlled
+
+in this case we can git to ingore certain files using concept of .gitignore
+
+
+In this file .gitignore add the name sof the files that we dont want to tract
+and git will stop tracking them
+git will not show status of those file
+
+This scenario is applicable only to new files
