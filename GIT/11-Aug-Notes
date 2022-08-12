@@ -1,0 +1,154 @@
+Branching
+
+# git status ==> shows master branch
+# git branch feature1 // copies all files form master
+# git status
+Switch to your branch
+# git checkout feature1
+# git status  
+ // On branch feature1
+
+# git ls-files // all files same as master on feature
+# git log --oneline // all commit same as master 
+
+Create a file on branch b1
+
+# vim file4 
+# git add file4
+# git commit -m "added file4"
+# git ls-files
+# git log --oneline   // 1 new commit which is not on master right now
+
+
+Merging a file from branch feature1 to master
+
+# git checkout master
+# git ls-files
+# git merge feature1 master  // merge from source  to destination master
+# git ls-files
+# git log --oneline
+
+
+To delete the branch:
+
+git branch -D feature1
+************************************************************************************
+REBASE:
+
+# git log --oneline  ==> see how many commits are there and reset commits to only last 2 commits
+
+# git reset --hard commitid ( give last second commit id)
+# git log --oneline ==> 2 comits will be there
+
+# git branch b2 master ==> create new branch b2 from master
+# git log --oneline ==> 2 commits will be there
+
+# git checkout master
+# vim login.txt ==> instert text ==>esc ==> :wq!
+# git add login.txt
+# git commit -m “file4 added to master”
+
+# git log --oneline ==> three commit id will be there --copy it on notepad
+
+# git checkout b2
+# vim logout.txt  ==> instert code for logout ==> esc ==> :wq!
+# git add logout.txt
+# git commit -m “logout on b2”
+# git log --online ==> 3 commits will be there on branch b2 ==> copy it on notepad
+
+
+Now if we use merge command, we will have commits and code as file1.txt, file2.txt, logout and login.txt(from master) . which is called as parallel merge
+
+But if we want to merge linear on branch then we will do rebase.
+Like this : file1.txt, file2.txt, login.txt(frommmaster) , logout.txt
+
+# git rebase master
+
+# git log --oneline ==> we will have commits arranges in liner fashion. ==> copy on notepad and show.
+
+************************************************************************************
+STASHING of files on GIT
+
+# git status ==> * indicates we are on master branch
+# vim index1.html ==> inster new code for signout button ==>esc ==> :wq!
+
+
+# git status ==> chnages that are untracked and we don’t want to commit them right now.
+
+So stash them on temporary space:
+
+# git stash   ==> all the untracked changes will be moved to temperory space
+
+Where is this temporary space?
+
+# git stash list   ==> will give list of chnages stashed 
+
+
+# git show stashnumber  ==> give stash number
+
+
+
+************************************************************************************
+GET changes back from stash ===> UNSTASHING
+
+# git stash pop stash@{0}   ==> will revert back all untracked file chnages
+After unstashing, the files will be dropped from temperory shelves. 
+
+  OR
+# git stash apply statsh@{0}   ==> will revert back chnages from temperory shelves to working directory
+// and files still remains on temperory shelves if needed latter in other branches.
+
+# git statsh list ==> nothing will be there  on executing stash pop.
+
+PARTIAL STASH 
+
+# git stash -p  ==> give y for which ever file we want to stash
+
+==> give N if we don’t want to stash
+
+# git stash drop stash@{0} 
+
+# git stash list
+
+# git stash clear  ==> no stash will be there
+************************************************************************************
+
+************************************************************************************
+REMOTE REPOSITORY:
+
+Create login and password of GITHUB
+
+Create a new repository on the git hub
+
+
+Copy the URL of the repository to  add local repo to external repo:
+
+# git remote add origin URL of externalrepo
+
+# git remote -v // will show that origin is mapped to external repo url
+
+
+Steps to create personal Access token
+
+Personal access tokens function like ordinary OAuth access tokens. They can be used instead of a password for Git over HTTPS, 
+or can be used to authenticate to the API over Basic Authentication.
+
+ Go to settings of the github account
+ Scroll down and click on developer settings on the left side
+ on the left side click on personal access token
+ Click on generate token
+ > in Note give a unique name of token
+ > expiration 30 days
+ > scope ==> select repo
+ > click on generate token
+
+you are goign to copy the token and ckeep it in a notepad
+
+******************************************
+
+PUSH files of master into external repo
+# git branch ==> checkout on master branch
+# git push origin master ==> pushes master files to origin(external repo)
+Username: 
+Passowrd: 
+//Now go to external repo and see all the files of master will be available
