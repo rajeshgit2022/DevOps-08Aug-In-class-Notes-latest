@@ -1,0 +1,197 @@
+Jenkins integration with Maven
+
+Maven:
+*************
+
+Maven is a plugin based tool
+Any task you want to do with maven, you will use its plugins 
+As a devops engineer you need to know 5-7 plugins only
+
+In maven there are 2 types of plugins:
+
+Core plugins : needed for core build process
+
+Tasks			Name Plugin		Command/GOAL
+***********************************************************************
+Compile the code	Compiler		mvn compile
+
+test the code		Surefire		mvn test
+
+Package the code	package			mvn package
+
+
+Review plugins: plugins needed for verification and review process
+
+These plugin will generate static code anaylysis reports with details on 
+coverage, complexity, review, bugs, programming errors
+
+Reports are always generated in XML, .csv or html
+
+Tasks			Name Plugin		Command/GOAL
+***********************************************************************
+
+Code review		pmd			mvn pmd:pmd
+
+Code Coverage		cobertura		mvn cobertura:cobertura
+
+
+For every plugin there is a maven command in order to execute the plugin and perform core task on the source code
+
+We will use all the 5 plugins today to create a CI pipeline
+
+Set up on Jenkins to integrate with JAVA GIT & Maven :
+
+
+Jenkins--> Manage Jenkins-->Global Tool configuration
+
+Go to JDK section
+Click on Add JDL
+In this give:
+
+2. JDK name as myjava
+ Uncheck checkbox -- install automatically
+
+3 go to terminal/server ==> mvn --version
+
+4. copy the value of variable java Home
+
+JAVA_HOME = /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.265.b01-1.amzn2.0.1.x86_64
+
+5. Add in jenkins also under JDK
+
+JAVA_HOME = /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.265.b01-1.amzn2.0.1.x86_64
+
+
+Under GIT==> leave it same 
+
+Under maven ==> lets install it automatically
+Type name as  mymaven and check the install automatically box.
+Save the changes
+
+
+All set to create pipelines
+
+In jenkins there are 2 types of syntax to write pipeline
+
+> scripted pipeline code
+
+Was used to write pipelines with Jenkins version1
+
+it was very difficult jenkins admino write the code, in order the code one has to be very good at DSL scripting
+
+the pipeline always starts with keyword "node"
+
+everything is defined by the author of the script
+
+There is no fixed template or stages or steps that one can follow
+
+> declarative Pipeline syntax
+
+With Jenkisn 2 we now use declarative pipeline code to write CICD pipelines
+It is very strcutured, and has differenct sections to perform various task of pipeline
+It very easy to write and easy to read
+It is declarative in nature 
+ key value
+eg:  tool jenkins
+     jdk myjava
+
+for all who are new to jenkins pipelines, Jenkins provide a code Snippet generator, using which you can generate your pipeline and learn it very easily
+
+
+Structure of Declarative pipeline:
+
+pipeline{
+
+tools{
+
+// tools to be used by the pipeline
+
+}
+
+agent {
+// names of master and slave where the tasks have to be executed
+}
+
+parameters{
+  // defined variables and give values
+}
+
+stages{
+
+	stage('task1')
+     	{
+		steps{
+			// steps to execute commands
+			}
+ 		}
+	stage('task2')
+     	{
+		steps{
+			// steps to execute commands
+			}
+ 		}
+
+
+
+
+}
+
+
+
+}
+
+
+pipeline{
+    
+    tools{
+        jdk 'myjava'
+        maven 'mymaven'
+    }
+    
+    agent any
+    
+    stages{
+        stage('Clone Repo')
+        {
+            steps{
+                git 'https://github.com/Sonal0409/DevOpsCodeDemo.git'
+            }
+        }
+        
+        stage('Compile the code')
+        {
+            steps{
+               
+                sh 'mvn compile'
+            }
+        }
+        
+        stage('Code Analysis')
+        {
+            steps{
+                sh 'mvn pmd:pmd'
+            }
+        }
+        
+        stage('code coverage')
+        {
+            steps{
+                sh 'mvn cobertura:cobertura -Dcobertura.report.format=xml'
+            }
+        }
+        
+        stage('Build the artifact')
+        {
+            steps{
+                sh 'mvn package'
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
