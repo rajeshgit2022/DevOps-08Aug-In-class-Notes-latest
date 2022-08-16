@@ -1,0 +1,125 @@
+
+Installation:
+
+yum install java-1.8.0-openjdk-devel -y
+
+https://www.jenkins.io/
+
+sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+
+
+yum install jenkins -y
+systemctl start jenkins
+
+Jenkins has a User interface that you access from your browser on port 8080
+
+  go to browser ==> copy public ip address of EC2
+
+   52.15.195.98:8080
+
+Jenkins Server will be availble on port 8080
+
+Unlock Jenkins:
+
+execute :
+
+cat /var/lib/jenkins/secrets/initialAdminPassword
+
+password will be displayed
+
+31f7530459cd4010b1909092c4
+
+copy it and paste on UI
+
+click on continue
+
+Select suggested plugin option
+click on continue
+
+Enter username : admin
+password : admin
+elnter all other details 
+
+save and conitnue
+
+
+Creation of a Job:
+************************************
+
+#1 Jenkins --> New Item --> Job1 --> Build --> shell comand---> echo 'this is my first job'
+
+Save --> click on Build Now  --> click on build number --> click on Console to see output
+
+
+
+Integrate jenkins with GIT & GITHUB
+
+Create a new Job-->Clone repo --> press Okay ---> Source code management--> Add git path
+
+https://github.com/Sonal0409/GITHUBJENKINSDEMO
+
+Save and build
+
+
+
+How will jenkins automatically run the job Clone repo each time there is a commit in GITHUB
+
+> Triggers in Jenkins --> Automatically run the job
+
+
+On the jenkins job, we can set an scedule to check in github if ther eis a new commit or not
+
+if there is a commit ===> jenkisn will execute the job and ftech the changes
+
+if ther eis no new commits ===> jenkins will not execute the job
+
+
+Trigger:
+
+1. POLL SCM
+
+Trigger by POLL SCM
+
+Create a new Job-->Source code management--> Add git path
+
+https://github.com/Sonal0409/GITHUBJENKINSDEMO
+
+Build Triggers--> Poll SCM --> * * * * *
+
+Build will be generated each time there is a chnage in the repository only.
+
+2.GitHub hook trigger for GITScm polling
+
+> Select the above option
+
+Save the job and now go to git hub
+
+Always save the job and then only  go to git hub, perform these steps
+
+go to the repository setting
+select webhooks on left side
+delete if any exisitng webhook
+
+click on createwebhook on right side
+
+provide following information:
+
+Payload URL : jenkinsurl/github-webhook/ ===> http://3.140.252.165:8080/github-webhook/
+
+Content type : select application/json
+
+Secret: no need of any value
+
+Which events would you like to trigger this webhook?
+
+select first option -- Just the push event.
+
+Select Active
+click on add webhook.
+
+now make some changes in repo,
+go to jenkins--> you will see a new build has been created
+
+
+
