@@ -1,0 +1,78 @@
+PULL files from external repo to local repo
+***************************************************
+Create files from github and pull the file into local repo
+
+# git pull origin 
+# ls ==> new file will be there
+
+Fetch files from external repo to local repo
+******************************************************
+Create a new file on external repo 
+
+# git fetch origin
+
+# git pull origin  ===> pull= fetch +merge
+
+# git pull remotebranch localbranchname
+# ls    //All files will be there in local as same as remote
+
+Fetch only specific file from remote Master branch
+**********************************************
+
+# git fetch --all
+
+# git checkout origin/<branch_name> -- fileName
+
+# git checkout origin/master -- fileDave
+
+Conflicts in external and local repo.
+*****************************************
+Create a file in remote repo file5.txt ==> add text
+Now create a file in local repo ==> same name file5.txt  ==> add text
+# git add file5.txt
+# git commit -m “local file5”
+
+Now without pulling from remote just push your changes
+
+# git push origin master 
+
+It will give conflict as there are changes in remote repo file
+
+So we have to first pull chnages from external repo , add them , commit them and then push our changes
+
+# git pull origin
+
+Agin conflict will be there
+
+Resolve conflict again
+
+# vim file5.txt ==> add the content required
+# git commit -a -m “new chnages”
+
+# git pull origin
+
+# git push origin master  ==> give credentials
+
+All changes will be there
+
+Cloning a repository
+*************************************************
+Go to github--> create a new repository 
+Use this repo:
+https://github.com/Sonal0409/7AMGITDEMO
+
+On host machine:
+Create an emplty directory
+# cd ..
+# pwd
+
+# mkdir project2
+# cd project2
+# git clone URL of new external repository
+
+==> it will copy all the files from external to your local repository
+
+# ls
+# cd directoryname/
+# ls  ==> files will be shown
+# ll -al  ==> all files and .git file will also be there
