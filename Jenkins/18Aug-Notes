@@ -81,3 +81,11 @@ pipeline{
 
 
 Note: go to manage jenins--> configure system --> global pipelines libraries --> add git repo details
+
+
+
+Link for learning pipeline and groovy code:
+
+http://18.221.116.221:8080/plugin/job-dsl/api-viewer/index.html#path/multibranchPipelineJob
+
+https://www.jenkins.io/doc/pipeline/steps/
