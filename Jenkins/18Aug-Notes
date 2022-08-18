@@ -1,0 +1,83 @@
+***********************************
+
+Creation of new User
+*************
+
+Jenkins--> Manage Jenkins--> Create/Add Users ----> left side ---> add User
+Add Name as DEV-->Last name -->Password--> Confirm Password--> Email --> submit
+
+New user created.
+
+*****************
+MANAGE AUTHORIZATION
+
+Matrix based Security
+
+ Goto MangeJenkins--->Global security --> Authorization Section---> select Matrix based Security
+ ---> Click on Add Users --> write admin---> give adminsitation access
+----> click on ADD --> write dev--> give Read access and job read access
+--> logout as admin -- login as Dev --> no jobs, only read access
+--> logout as Dev ---> login as Admin
+
+Project based Matrix Security
+
+ Goto MangeJenkins--->Global security --> Authorization Section---> Select Project based Matrix Security
+-->   Click on Add Users --> write admin---> give adminsitation access
+----> click on ADD --> write dev--> give Read access 
+--> go to Job1 --> configure--> general --> Check Enable project based security
+--> Add user as Dev --> give him access to read, build, write, workspace, build
+
+--> go to Job1 --> configure--> general --> Check Enable project based security
+--> Add user as Dev --> give him access to read
+
+Save file
+
+Logout as admin--> login as Dev --> you will see both the jobs , job2 will be only read access.
+
+Logout as dev and login as Admin
+
+**************************************
+
+Shared Library notes:
+Jenkins --> Shared Library
+
+It is a concept of having common jenkins code in the GITHUB. this code can be used any number of
+times in your pipeline just by refering to it
+
+Shared library repo
+
+https://github.com/Sonal0409/shared-library.git
+
+Pipeline:
+
+
+#!/usr/bin/env groovy
+
+@Library('shared-library@master') _ //master or whatever branch
+
+pipeline{
+
+      agent any
+        
+        stages{
+
+              stage('maven build'){
+                  steps{
+                      script{
+                                git 'https://github.com/Sonal0409/sample-web-application.git'
+		    	                sh "mvn clean install"
+                      	  }
+               	     }  
+                 }	
+                 
+                 stage ('Check logs') {
+                    steps {
+                        filterLogs ('WARNING', 1)
+                    }
+                }
+		
+           }	       	     	         
+}
+
+
+Note: go to manage jenins--> configure system --> global pipelines libraries --> add git repo details
