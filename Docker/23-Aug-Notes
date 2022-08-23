@@ -1,0 +1,87 @@
+Method for portmapping 
+
+Use -P option
+
+In this case we dont provide any port number during the run command, docker system will do random port mapping
+of system port and container port
+
+docker run -d --name n1 -P nginx
+
+
+Volumes in Docker:
+*************
+
+2 types of volumes in docker
+
+
+1. Named volume:
+
+
+Demo1: Let us create a volume and give a name to the volume
+
+Volume is a directory in whcih we will preserve containers data
+
+where will this named volume directlry be available: it will under /var/lib/docker/volumes
+
+$ docker volume create myvol
+
+docker volume ls
+
+docker volume inspect myvol
+
+Location where the colume is created: /var/lib/docker/volumes/myvol/_data
+
+
+Demo 2: preserving the data of the container on the volume directory
+
+ docker run -it --name u1 -v myvol:/tmp ubuntu
+
+ you will be on the container
+
+ cd tmp
+ touch file1 file 2
+
+come out of container
+
+ctl pq
+
+go to vol directory
+
+/var/lib/docker/volumes/myvol/_data
+
+ls
+
+all the data will be there
+
+Demo 3: Create a file in the volume directory and check if the data is available on the container or not
+
+Assignment:
+Demo 4: Containers sharing the data
+
+
+2. Bind mounts
+
+Is a type of volume using which you can preserve data of the container on any directory of the host machine
+
+
+ volume mappping will be done as:
+
+ -v anydirectoryHost:directoryofcontainer
+
+Volume mapping has to be done at runtime only
+
+once container is created you cannot do volume mapping
+
+> Go to a repo with application code in github
+
+> Fetch all the code to local
+
+ > git clone https://github.com/Sonal0409/ecomm.git
+
+ /root/ecomm
+
+> copy the code on the container directory
+
+ Can be done using volume of type bind mounts
+
+> access the container from the browser my machine
